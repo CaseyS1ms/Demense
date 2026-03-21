@@ -12,7 +12,7 @@ class Map:
         self.height = height
         self.scale = scale
 
-        self.grid = np.zeros((width,height), dtype=object)
+        self.grid = np.zeros((height,width), dtype=object)
 
 
     def generate(self):
@@ -24,13 +24,13 @@ class Map:
         return self.grid
 
     def getTileType(self, value):
-        if value < -0.2:
+        if value < -0.4:
             return "water"
         elif value < 0.0:
             return "farmland"
-        elif value < 0.3:
+        elif value < 0.2:
             return "forest"
-        elif value < 0.5:
+        elif value < 0.6:
             return "hills"
         else:
             return "mountain"
