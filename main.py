@@ -1,6 +1,6 @@
 from world.map import Map as mp
 from renderer.render import renderer
-from kingdom import Kingdom
+from simulation.kingdom import Kingdom
 
 MAP_SIZE_WIDTH = 80
 MAP_SIZE_HEIGHT = 80
