@@ -1,13 +1,24 @@
 from world.map import Map as mp
 from renderer.render import renderer
 
-MAP_SIZE = 50
+MAP_SIZE_WIDTH = 80
+MAP_SIZE_HEIGHT = 80
 
 
-world_map = mp(MAP_SIZE,MAP_SIZE,10)
-game_renderer = renderer(MAP_SIZE)
+world_map = mp(MAP_SIZE_WIDTH,MAP_SIZE_HEIGHT,12)
+game_renderer = renderer(MAP_SIZE_WIDTH, MAP_SIZE_HEIGHT)
+
+#SETTING UP THE SIM
 
 world_map.generate()
 #world_map.printMap()
 game_renderer.initialise()
-game_renderer.update(world_map)
+
+
+#WHILE RUNNING
+running = True
+while running:
+    if not game_renderer.update(world_map):
+        running = False
+
+
