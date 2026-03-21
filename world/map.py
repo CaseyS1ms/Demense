@@ -12,7 +12,7 @@ class Map:
         self.height = height
         self.scale = scale
 
-        self.grid = np.zeros((width,height), dtype=object)
+        self.grid = np.zeros((height,width), dtype=object)
 
 
     def generate(self):
