@@ -30,7 +30,7 @@ class Map:
             return "farmland"
         elif value < 0.2:
             return "forest"
-        elif value < 0.6:
+        elif value < 0.4:
             return "hills"
         else:
             return "mountain"
