@@ -12,3 +12,10 @@ class Simulator:
 
     def step(self):
         raise NotImplementedError
+
+
+    def is_food(self):
+        if self.food_stores > 0:
+            return True
+        else:
+            return False
