@@ -1,11 +1,13 @@
-from simulator import Simulator
+from agents.peasant import Peasant
+from simulation.simulator import Simulator
 import random
 import math
 
 class Kingdom(Simulator):
 
-    def __init__(self, map, market, agents, population, food_stores, treasury):
-        super().__init__(map, market, agents, population, food_stores, treasury)
+    def __init__(self, map, market, agents, food_stores, treasury):
+        super().__init__(map, market, agents, len(agents), food_stores, treasury)
+
 
 
 
@@ -19,38 +21,57 @@ class Kingdom(Simulator):
 
         #EVERY DAY
         if self.tick % 24 == 0:
+            pass
 
-            print("population is: ", self.population, "\nfood stores are: ", self.food_stores, "\ntreasury is: ",
-                  self.treasury)
+            # print("population is: ", self.population, "\nfood stores are: ", self.food_stores, "\ntreasury is: ",
+            #       self.treasury)
 
             #PEOPLE EATING
-            self.food_stores = max(0, self.food_stores - self.population)
+            #self.food_stores = max(0, self.food_stores - self.population)
             #PEOPLE PRODUCING FOOD
-            #self.food_stores += math.floor(self.population  * 1.2)
+            # self.food_stores += math.floor(len(self.agents)  * 1.2)
 
             #POPUlATION LOGIC
-            if self.food_stores > self.population * 1.5:
-                if random.random() < 0.2:
-                    self.population += 1
-                    self.food_stores -= 1
+            # if self.food_stores > self.population * 1.5:
+            #     if random.random() < 0.2:
+            #         self.population += 1
+            #         self.food_stores -= 1
 
         #EVERY 3 DAYS
-        if self.tick % 72 == 0:
-
-            if self.food_stores < self.population:
-                self.population = max(0, self.population - 1)
+            if self.tick % 72 == 0:
+                self.food_stores += math.floor(len(self.agents)  * 0.9)
+        #
+        #     if self.food_stores < self.population:
+        #         self.population = max(0, self.population - 1)
 
 
         #EVERY MONTH
 
         if self.tick % 720 == 0:
-            self.treasury += math.floor(self.population * 0.2)
+            self.treasury += math.floor(len(self.agents) * 0.2)
 
-            print("population is: ", self.population, "\nfood stores are: ", self.food_stores, "\ntreasury is: ", self.treasury)
+            print("population is: ", len(self.agents), "\nfood stores are: ", self.food_stores, "\ntreasury is: ", self.treasury)
 
 
-        #EVERY HALF YEAR A BIG HARVEST
-        if self.tick % 4380 == 0:
 
-            self.food_stores += self.population * 100
 
+        #EVERY HALF-YEAR A BIG HARVEST
+        # if self.tick % 4380 == 0:
+        #
+        #     self.food_stores += 50 * 100
+
+
+
+
+    def spawn_agents(self, amount):
+
+        for _ in range(amount):
+            peasant = Peasant(self.tick)
+            print("agent created")
+            self.agents.append(peasant)
+            # print(len(self.agents))
+
+    def agent_born(self):
+        peasant = Peasant(self.tick)
+        # print("agent born")
+        self.agents.append(peasant)
