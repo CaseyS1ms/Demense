@@ -10,6 +10,8 @@ class Agent:
         self.food = 0
         self.posX = random.randint(10,750)
         self.posY = random.randint(10,750)
+        self.age = random.randint(18, 24)
+        self.gender = random.randint(1,2) #1 is male 2 is female - will play a role in reproduction
 
 
     def step(self, kingdom):
