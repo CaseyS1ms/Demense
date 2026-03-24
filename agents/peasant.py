@@ -6,7 +6,7 @@ class Peasant(Agent):
 
     def __init__(self, tick):
         super().__init__(0, 0, tick, 0)
-        self.last_reproduced = 0
+        self.last_reproduced = random.randint(0,6480)
         self.ageofdeath = random.randint(60, 100)
 
 

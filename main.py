@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 from agents.peasant import Peasant
 from world.map import Map as mp
 from renderer.render import renderer
@@ -44,5 +46,10 @@ while running:
 
     if not game_renderer.update(world_map, kingdom.agents):
         running = False
+
+
+plt.plot(kingdom.pop_list)
+
+plt.show()
 
 

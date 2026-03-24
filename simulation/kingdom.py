@@ -9,7 +9,7 @@ class Kingdom(Simulator):
 
     def __init__(self, map, market, agents, food_stores, treasury):
         super().__init__(map, market, agents, len(agents), food_stores, treasury)
-
+        self.pop_list = []
 
 
 
@@ -52,6 +52,10 @@ class Kingdom(Simulator):
         #
         #     if self.food_stores < self.population:
         #         self.population = max(0, self.population - 1)
+
+
+            if self.tick & 168 == 0:
+                self.pop_list.append(len(self.agents))
 
 
         #EVERY MONTH
