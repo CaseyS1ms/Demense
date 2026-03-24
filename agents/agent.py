@@ -1,3 +1,5 @@
+import random
+
 class Agent:
 
 
@@ -6,7 +8,8 @@ class Agent:
         self.gold = gold
         self.tick = tick
         self.food = 0
-
+        self.posX = random.randint(10,750)
+        self.posY = random.randint(10,750)
 
 
     def step(self, kingdom):

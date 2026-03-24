@@ -1,3 +1,5 @@
+import agents
+
 from agents.peasant import Peasant
 from simulation.simulator import Simulator
 import random
@@ -17,7 +19,14 @@ class Kingdom(Simulator):
     def step(self):
         self.tick += 1
 
+        for agent in self.agents:
+            agent.posX += random.randint(-1,1)
+            agent.posY += random.randint(-1,1)
 
+            if agent.posX > 800:
+                agent.posX = 0
+            elif agent.posY > 800:
+                agent.posY = 0
 
         #EVERY DAY
         if self.tick % 24 == 0:
@@ -71,7 +80,13 @@ class Kingdom(Simulator):
             self.agents.append(peasant)
             # print(len(self.agents))
 
+
     def agent_born(self):
         peasant = Peasant(self.tick)
         # print("agent born")
         self.agents.append(peasant)
+
+    def agent_move(self, peasant):
+        peasant.posX += 0.5 * random.randint(0,1)
+        peasant.posY += 0.5 * random.randint(0,1)
+

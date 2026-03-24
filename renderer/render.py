@@ -1,5 +1,5 @@
 import pygame
-
+import random
 
 
 class renderer:
@@ -24,6 +24,7 @@ class renderer:
         # self.map_size = map_size
         self.width = width
         self.height = height
+        self.rndomChance = random.randint(0,1)
 
 
 
@@ -36,6 +37,7 @@ class renderer:
         self.sizeH = self.TILE_SIZE * self.height
         self.screen = pygame.display.set_mode((self.sizeW, self.sizeH))
 
+
         #temporarily here
         clock = pygame.time.Clock()
         self.screen.fill("white")
@@ -43,13 +45,20 @@ class renderer:
 
 
 
-    def update(self, world_map):
+    def update(self, world_map, agents):
 
         for y in range(world_map.height):
             for x in range(world_map.width):
                 tile = world_map.grid[y][x]
                 self.tile_colour = self.TILE_COLOR[tile.tileType]
                 pygame.draw.rect(self.screen,self.tile_colour, (x * self.TILE_SIZE, y * self.TILE_SIZE, self.TILE_SIZE, self.TILE_SIZE))
+
+                if self.rndomChance < 0.2:
+                    pygame.draw.circle(self.screen, "green", (x * self.TILE_SIZE, y * self.TILE_SIZE), 5)
+
+
+        for agent in agents:
+            pygame.draw.circle(self.screen, "red", (agent.posX, agent.posY), 5)
         pygame.display.flip()
 
         for event in pygame.event.get():

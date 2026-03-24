@@ -17,7 +17,7 @@ kingdom = Kingdom(0, 100, [],  1000, 50)
 world_map.generate()
 #world_map.printMap()
 game_renderer.initialise()
-kingdom.spawn_agents(100)
+kingdom.spawn_agents(10)
 
 
 
@@ -42,7 +42,7 @@ while running:
     kingdom.agents = [a for a in kingdom.agents if a not in dead_agent]
 
 
-    if not game_renderer.update(world_map):
+    if not game_renderer.update(world_map, kingdom.agents):
         running = False
 
 
