@@ -8,6 +8,7 @@ class Peasant(Agent):
         super().__init__(0, 0, tick, 0)
         self.last_reproduced = random.randint(0,6480)
         self.ageofdeath = random.randint(60, 100)
+        self.birth_tick = tick
 
 
 
@@ -16,7 +17,7 @@ class Peasant(Agent):
     def step(self, simulator):
 
         #HUNGER INCREMENTING
-        self.hunger += 0.5
+        self.hunger += 1
 
         #SURVIVAL CHECKS
         if self.hunger >= 100:
@@ -40,6 +41,10 @@ class Peasant(Agent):
                         # print("trying to reproduce")
                         self.last_reproduced = simulator.tick
                         return "reproduce"
+
+        #WORKING - making food every day
+        if (simulator.tick - self.birth_tick) % 72 == 0:
+            simulator.food_stores += 1
 
         #AGING - every year
         if simulator.tick % 8760 == 0:

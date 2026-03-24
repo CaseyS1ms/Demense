@@ -11,7 +11,7 @@ class Simulator:
 
 
     def step(self):
-        raise NotImplementedError
+        raise NotImplementedError("Each agent needs its own implementation")
 
 
     def is_food(self):

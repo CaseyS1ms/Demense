@@ -10,11 +10,7 @@ class Kingdom(Simulator):
     def __init__(self, map, market, agents, food_stores, treasury):
         super().__init__(map, market, agents, len(agents), food_stores, treasury)
         self.pop_list = []
-
-
-
-
-
+        self.food_list = []
 
     def step(self):
         self.tick += 1
@@ -32,31 +28,10 @@ class Kingdom(Simulator):
         if self.tick % 24 == 0:
             pass
 
-            # print("population is: ", self.population, "\nfood stores are: ", self.food_stores, "\ntreasury is: ",
-            #       self.treasury)
-
-            #PEOPLE EATING
-            #self.food_stores = max(0, self.food_stores - self.population)
-            #PEOPLE PRODUCING FOOD
-            # self.food_stores += math.floor(len(self.agents)  * 1.2)
-
-            #POPUlATION LOGIC
-            # if self.food_stores > self.population * 1.5:
-            #     if random.random() < 0.2:
-            #         self.population += 1
-            #         self.food_stores -= 1
-
-        #EVERY 3 DAYS
-            if self.tick % 72 == 0:
-                self.food_stores += math.floor(len(self.agents)  * 0.9)
-        #
-        #     if self.food_stores < self.population:
-        #         self.population = max(0, self.population - 1)
-
-
-            if self.tick & 168 == 0:
-                self.pop_list.append(len(self.agents))
-
+        #EVERY WEEK
+        if self.tick % 168 == 0:
+            self.pop_list.append(len(self.agents))
+            self.food_list.append(self.food_stores)
 
         #EVERY MONTH
 
@@ -64,16 +39,6 @@ class Kingdom(Simulator):
             self.treasury += math.floor(len(self.agents) * 0.2)
 
             print("population is: ", len(self.agents), "\nfood stores are: ", self.food_stores, "\ntreasury is: ", self.treasury)
-
-
-
-
-        #EVERY HALF-YEAR A BIG HARVEST
-        # if self.tick % 4380 == 0:
-        #
-        #     self.food_stores += 50 * 100
-
-
 
 
     def spawn_agents(self, amount):
@@ -85,7 +50,6 @@ class Kingdom(Simulator):
 
             self.agents.append(peasant)
             # print(len(self.agents))
-
 
     def agent_born(self):
         peasant = Peasant(self.tick)

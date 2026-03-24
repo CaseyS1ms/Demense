@@ -6,13 +6,13 @@ from renderer.render import renderer
 from simulation.kingdom import Kingdom
 
 
-MAP_SIZE_WIDTH = 80
+MAP_SIZE_WIDTH = 120
 MAP_SIZE_HEIGHT = 80
 
 
 world_map = mp(MAP_SIZE_WIDTH,MAP_SIZE_HEIGHT,12)
 game_renderer = renderer(MAP_SIZE_WIDTH, MAP_SIZE_HEIGHT)
-kingdom = Kingdom(0, 100, [],  1000, 50)
+kingdom = Kingdom(0, 100, [],  100, 50)
 
 #SETTING UP THE SIM
 
@@ -47,9 +47,14 @@ while running:
     if not game_renderer.update(world_map, kingdom.agents):
         running = False
 
-
-plt.plot(kingdom.pop_list)
-
-plt.show()
+if kingdom.pop_list and kingdom.food_list:
+    plt.figure(figsize=(10, 5))
+    plt.plot(kingdom.food_list, label="Food Stores")
+    plt.plot(kingdom.pop_list, label="Population")
+    plt.title("Kingdom Growth Over Time")
+    plt.xlabel("Weeks")
+    plt.ylabel("Amount")
+    plt.legend()
+    plt.show()
 
 

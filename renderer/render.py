@@ -25,6 +25,7 @@ class renderer:
         self.width = width
         self.height = height
         self.rndomChance = random.randint(0,1)
+        self.clock = 0
 
 
 
@@ -39,7 +40,7 @@ class renderer:
 
 
         #temporarily here
-        clock = pygame.time.Clock()
+        self.clock = pygame.time.Clock()
         self.screen.fill("white")
 
 
@@ -57,7 +58,7 @@ class renderer:
 
 
         for agent in agents:
-            pygame.draw.circle(self.screen, "red", (agent.posX, agent.posY), 5)
+            pygame.draw.circle(self.screen, "red", (agent.posX, agent.posY), 2)
         pygame.display.flip()
 
         for event in pygame.event.get():
@@ -66,6 +67,8 @@ class renderer:
                 pygame.quit()
                 return False
 
+
+        self.clock.tick(60)
 
         return True
 
