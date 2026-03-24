@@ -53,8 +53,7 @@ class renderer:
                 self.tile_colour = self.TILE_COLOR[tile.tileType]
                 pygame.draw.rect(self.screen,self.tile_colour, (x * self.TILE_SIZE, y * self.TILE_SIZE, self.TILE_SIZE, self.TILE_SIZE))
 
-                if self.rndomChance < 0.2:
-                    pygame.draw.circle(self.screen, "green", (x * self.TILE_SIZE, y * self.TILE_SIZE), 5)
+
 
 
         for agent in agents:

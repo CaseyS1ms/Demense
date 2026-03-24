@@ -76,7 +76,9 @@ class Kingdom(Simulator):
 
         for _ in range(amount):
             peasant = Peasant(self.tick)
-            print("agent created")
+            print("agent created and it is a ", peasant.gender)
+            print("agent is ", peasant.age, "years old and will die when they are ", peasant.ageofdeath)
+
             self.agents.append(peasant)
             # print(len(self.agents))
 

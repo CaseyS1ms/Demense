@@ -20,6 +20,7 @@ class Peasant(Agent):
 
         #SURVIVAL CHECKS
         if self.hunger >= 100:
+            print("agent died of hunger")
             return "dead"
 
         if self.age > self.ageofdeath:
@@ -32,17 +33,16 @@ class Peasant(Agent):
                 self.hunger = 0
 
         #REPRODUCTION
-        if self.hunger < 75:
-            if random.random() < 0.2:
-                # print(simulator.tick, self.last_reproduced, simulator.tick - self.last_reproduced)
-
+        if self.age >= 18 and self.gender == 2:  #Gender 2 is female
+            if self.hunger < 75:
                 if simulator.tick - self.last_reproduced > 6480:
-                    # print("trying to reproduce")
-                    self.last_reproduced = simulator.tick
-                    return "reproduce"
+                    if random.random() < 0.2:
+                        # print("trying to reproduce")
+                        self.last_reproduced = simulator.tick
+                        return "reproduce"
 
-        #AGING
-        if simulator.tick % 8760:
+        #AGING - every year
+        if simulator.tick % 8760 == 0:
             self.age += 1
 
         return "alive"
