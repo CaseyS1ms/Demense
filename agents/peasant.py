@@ -4,11 +4,12 @@ import random
 
 class Peasant(Agent):
 
-    def __init__(self, tick):
-        super().__init__(0, 0, tick, 0)
+    def __init__(self, tick, sim_map):
+        super().__init__(0, 0, tick, 0, sim_map)
         self.last_reproduced = random.randint(0,6480)
         self.ageofdeath = random.randint(60, 100)
         self.birth_tick = tick
+        self.sim_map = sim_map
 
 
 
@@ -53,7 +54,19 @@ class Peasant(Agent):
         return "alive"
 
 
+    def update(self):
+        self.posX += random.randint(-1, 1)
+        self.posY += random.randint(-1,1)
 
+        if self.posX > self.sim_map.width:
+            self.posX = 0
+        elif self.posY > self.sim_map.height:
+            self.posY = 0
+
+
+    # def agent_move(self, peasant):
+    #     peasant.posX += 0.5 * random.randint(0,1)
+    #     peasant.posY += 0.5 * random.randint(0,1)
 
 
 
@@ -64,3 +77,4 @@ class Peasant(Agent):
             return True
         else:
             return False
+

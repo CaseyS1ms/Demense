@@ -18,19 +18,19 @@ class Map:
     def generate(self):
         for y in range(self.height):
             for x in range(self.width):
-                self.grid[y][x] = noise.pnoise2(x / self.scale, y / self.scale)
+                self.grid[y][x] = noise.pnoise2(x / self.scale, y / self.scale, 3, 0.5, 2.0, 2560, 2560)
                 tileType = self.getTileType(self.grid[y][x])
                 self.grid[y][x] = Tile(tileType)
         return self.grid
 
     def getTileType(self, value):
-        if value < -0.4:
+        if value < -0.3:
             return "water"
         elif value < 0.0:
             return "farmland"
         elif value < 0.2:
             return "forest"
-        elif value < 0.4:
+        elif value < 0.3:
             return "hills"
         else:
             return "mountain"

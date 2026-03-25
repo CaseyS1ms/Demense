@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt
+
 
 from agents.peasant import Peasant
 from world.map import Map as mp
@@ -7,10 +7,10 @@ from simulation.kingdom import Kingdom
 
 
 MAP_SIZE_WIDTH = 1000
-MAP_SIZE_HEIGHT = 1000
+MAP_SIZE_HEIGHT = 800
 
 
-world_map = mp(MAP_SIZE_WIDTH,MAP_SIZE_HEIGHT,100)
+world_map = mp(MAP_SIZE_WIDTH,MAP_SIZE_HEIGHT,50)
 game_renderer = renderer(MAP_SIZE_WIDTH, MAP_SIZE_HEIGHT)
 kingdom = Kingdom(world_map, 100, [],  100, 50)
 
@@ -47,14 +47,6 @@ while running:
     if not game_renderer.update(world_map, kingdom.agents):
         running = False
 
-if kingdom.pop_list and kingdom.food_list:
-    plt.figure(figsize=(10, 5))
-    plt.plot(kingdom.food_list, label="Food Stores")
-    plt.plot(kingdom.pop_list, label="Population")
-    plt.title("Kingdom Growth Over Time")
-    plt.xlabel("Weeks")
-    plt.ylabel("Amount")
-    plt.legend()
-    plt.show()
+
 
 

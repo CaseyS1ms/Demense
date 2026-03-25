@@ -4,7 +4,7 @@ import random
 
 class renderer:
 
-    TILE_SIZE = 10
+    TILE_SIZE = 2
 
     TILE_COLOR = \
         {
@@ -34,8 +34,8 @@ class renderer:
     def initialise(self):
         pygame.init()
 
-        self.sizeW = self.TILE_SIZE * self.width
-        self.sizeH = self.TILE_SIZE * self.height
+        self.sizeW = self.width
+        self.sizeH = self.height
         self.screen = pygame.display.set_mode((self.sizeW, self.sizeH))
 
 
@@ -58,7 +58,7 @@ class renderer:
 
 
         for agent in agents:
-            pygame.draw.circle(self.screen, "red", (agent.posX, agent.posY), 2)
+            pygame.draw.circle(self.screen, "red", (agent.posX * self.TILE_SIZE, agent.posY * self.TILE_SIZE), 2)
         pygame.display.flip()
 
         for event in pygame.event.get():

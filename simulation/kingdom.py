@@ -1,4 +1,5 @@
 import agents
+from agents import peasant
 
 from agents.peasant import Peasant
 from simulation.simulator import Simulator
@@ -16,13 +17,22 @@ class Kingdom(Simulator):
         self.tick += 1
 
         for agent in self.agents:
-            agent.posX += random.randint(-1,1)
-            agent.posY += random.randint(-1,1)
+            agent.update()
 
-            if agent.posX > 800:
-                agent.posX = 0
-            elif agent.posY > 800:
-                agent.posY = 0
+
+        # for agent in self.agents:
+        #     agent.posX += random.randint(-1,1)
+        #     agent.posY += random.randint(-1,1)
+        #
+        #     if agent.posX > self.map.width:
+        #         agent.posX = 0
+        #     elif agent.posY > self.map.height:
+        #         agent.posY = 0
+
+        if self.tick % 12 == 0:
+            pass
+            # for agent in self.agents:
+            #     agent.update()
 
         #EVERY DAY
         if self.tick % 24 == 0:
@@ -44,7 +54,7 @@ class Kingdom(Simulator):
     def spawn_agents(self, amount):
 
         for _ in range(amount):
-            peasant = Peasant(self.tick)
+            peasant = Peasant(self.tick, self.map)
             print("agent created and it is a ", peasant.gender)
             print("agent is ", peasant.age, "years old and will die when they are ", peasant.ageofdeath)
 
@@ -52,11 +62,9 @@ class Kingdom(Simulator):
             # print(len(self.agents))
 
     def agent_born(self):
-        peasant = Peasant(self.tick)
+        peasant = Peasant(self.tick, self.map)
         # print("agent born")
         self.agents.append(peasant)
 
-    def agent_move(self, peasant):
-        peasant.posX += 0.5 * random.randint(0,1)
-        peasant.posY += 0.5 * random.randint(0,1)
+
 
