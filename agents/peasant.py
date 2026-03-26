@@ -18,7 +18,7 @@ class Peasant(Agent):
     def step(self, simulator):
 
         #HUNGER INCREMENTING
-        self.hunger += 1
+        self.hunger += 3
 
         #SURVIVAL CHECKS
         if self.hunger >= 100:
@@ -39,12 +39,11 @@ class Peasant(Agent):
             if self.hunger < 75:
                 if simulator.tick - self.last_reproduced > 6480:
                     if random.random() < 0.2:
-                        # print("trying to reproduce")
                         self.last_reproduced = simulator.tick
                         return "reproduce"
 
         #WORKING - making food every day
-        if (simulator.tick - self.birth_tick) % 72 == 0:
+        if (simulator.tick - self.birth_tick) % 24 == 0:
             simulator.food_stores += 1
 
         #AGING - every year
@@ -52,24 +51,30 @@ class Peasant(Agent):
             self.age += 1
 
         return "alive"
-
+    #END OF STEP FUNCTION
 
     def update(self):
-        self.posX += random.randint(-1, 1)
-        self.posY += random.randint(-1,1)
 
-        if self.posX > self.sim_map.width:
-            self.posX = 0
-        elif self.posY > self.sim_map.height:
-            self.posY = 0
+        max_x = self.sim_map.width - 1
+        max_y = self.sim_map.height - 1
+
+        new_x = self.posX + random.randint(-1, 1)
+        new_y = self.posY + random.randint(-1,1)
+
+        #BOUNDS CHECKING
+        new_x = max(0, min(max_x, new_x))
+        new_y = max(0, min(max_y, new_y))
+
+        #CHECKING FOR IMPASSABLE TERRAIN
+        if self.sim_map.grid[new_y][new_x].passable:
+            self.posX = new_x
+            self.posY = new_y
+        else:
+           pass
 
 
-    # def agent_move(self, peasant):
-    #     peasant.posX += 0.5 * random.randint(0,1)
-    #     peasant.posY += 0.5 * random.randint(0,1)
 
-
-
+    #ENF OF UPDATE FUNCTION
 
     def attempt_eat(self,simulator):
         if simulator.is_food():
@@ -78,3 +83,4 @@ class Peasant(Agent):
         else:
             return False
 
+    #END OF ATTEMPT EAT FUNCTION

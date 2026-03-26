@@ -21,7 +21,6 @@ class renderer:
         self.tile_colour = None
         self.screen = None
         self.size = None
-        # self.map_size = map_size
         self.width = width
         self.height = height
         self.rndomChance = random.randint(0,1)
@@ -77,7 +76,10 @@ class renderer:
                 self.tile_colour = self.TILE_COLOR[tile.tileType]
                 pygame.draw.rect(self.map_surface,self.tile_colour, (x * self.TILE_SIZE, y * self.TILE_SIZE, self.TILE_SIZE, self.TILE_SIZE))
 
-
+    def get_map_dimensions(self):
+        return_width = self.width / self.TILE_SIZE
+        return_height = self.height / self.TILE_SIZE
+        return return_width,return_height
 
 
 

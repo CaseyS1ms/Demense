@@ -6,18 +6,18 @@ from renderer.render import renderer
 from simulation.kingdom import Kingdom
 
 
-MAP_SIZE_WIDTH = 1000
-MAP_SIZE_HEIGHT = 1000
+MAP_SIZE_WIDTH = 500
+MAP_SIZE_HEIGHT = 400
 
-
-world_map = mp(MAP_SIZE_WIDTH,MAP_SIZE_HEIGHT,100)
 game_renderer = renderer(MAP_SIZE_WIDTH, MAP_SIZE_HEIGHT)
+map_width, map_height = game_renderer.get_map_dimensions()
+world_map = mp(int(map_width),int(map_height),25)
+
 kingdom = Kingdom(world_map, 100, [],  100, 50)
 
 #SETTING UP THE SIM
 
 world_map.generate()
-#world_map.printMap()
 game_renderer.initialise()
 game_renderer.draw_map(world_map)
 kingdom.spawn_agents(10)
@@ -32,17 +32,7 @@ running = True
 while running:
 
     kingdom.step()
-    dead_agent = []
-    for active_agent in kingdom.agents:
-        state = active_agent.step(kingdom)
 
-        if state == "dead":
-            dead_agent.append(active_agent)
-        elif state == "reproduce":
-            kingdom.agent_born()
-
-
-    kingdom.agents = [a for a in kingdom.agents if a not in dead_agent]
 
 
     if not game_renderer.update(world_map, kingdom.agents):

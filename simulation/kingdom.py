@@ -13,58 +13,57 @@ class Kingdom(Simulator):
         self.pop_list = []
         self.food_list = []
 
+
+
     def step(self):
+
+        dead_agent = []
+        for active_agent in self.agents:
+            state = active_agent.step(self)
+
+            if state == "dead":
+                dead_agent.append(active_agent)
+            elif state == "reproduce":
+                self.agent_born()
+
+        self.agents = [a for a in self.agents if a not in dead_agent]
+
+
+
+
+
+        #ONE TICK IS ONE HOUR
         self.tick += 1
 
         for agent in self.agents:
             agent.update()
 
-
-        # for agent in self.agents:
-        #     agent.posX += random.randint(-1,1)
-        #     agent.posY += random.randint(-1,1)
-        #
-        #     if agent.posX > self.map.width:
-        #         agent.posX = 0
-        #     elif agent.posY > self.map.height:
-        #         agent.posY = 0
-
-        if self.tick % 12 == 0:
-            pass
-            # for agent in self.agents:
-            #     agent.update()
-
-        #EVERY DAY
-        if self.tick % 24 == 0:
-            pass
-
         #EVERY WEEK
         if self.tick % 168 == 0:
+            #STATISTIC TRACKING
             self.pop_list.append(len(self.agents))
             self.food_list.append(self.food_stores)
 
         #EVERY MONTH
-
         if self.tick % 720 == 0:
             self.treasury += math.floor(len(self.agents) * 0.2)
-
             print("population is: ", len(self.agents), "\nfood stores are: ", self.food_stores, "\ntreasury is: ", self.treasury)
-
+    #END OF STEP FUNCTION
 
     def spawn_agents(self, amount):
 
         for _ in range(amount):
             peasant = Peasant(self.tick, self.map)
-            print("agent created and it is a ", peasant.gender)
-            print("agent is ", peasant.age, "years old and will die when they are ", peasant.ageofdeath)
+            #print("agent created and it is a ", peasant.gender)
+            #print("agent is ", peasant.age, "years old and will die when they are ", peasant.ageofdeath)
 
             self.agents.append(peasant)
-            # print(len(self.agents))
+    #END OF SPAWN AGENTS FUNCTION
 
     def agent_born(self):
         peasant = Peasant(self.tick, self.map)
         # print("agent born")
         self.agents.append(peasant)
-
+    #END OF AGENT BORN FUNCTION
 
 
