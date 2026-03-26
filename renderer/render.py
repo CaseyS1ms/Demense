@@ -37,6 +37,7 @@ class renderer:
         self.sizeW = self.width
         self.sizeH = self.height
         self.screen = pygame.display.set_mode((self.sizeW, self.sizeH))
+        self.map_surface = None
 
 
         #temporarily here
@@ -48,13 +49,7 @@ class renderer:
 
     def update(self, world_map, agents):
 
-        for y in range(world_map.height):
-            for x in range(world_map.width):
-                tile = world_map.grid[y][x]
-                self.tile_colour = self.TILE_COLOR[tile.tileType]
-                pygame.draw.rect(self.screen,self.tile_colour, (x * self.TILE_SIZE, y * self.TILE_SIZE, self.TILE_SIZE, self.TILE_SIZE))
-
-
+        self.screen.blit(self.map_surface, (0, 0))
 
 
         for agent in agents:
@@ -71,6 +66,17 @@ class renderer:
         self.clock.tick(60)
 
         return True
+
+
+
+    def draw_map(self, world_map):
+        self.map_surface = pygame.Surface((world_map.width * self.TILE_SIZE, world_map.height * self.TILE_SIZE))
+        for y in range(world_map.height):
+            for x in range(world_map.width):
+                tile = world_map.grid[y][x]
+                self.tile_colour = self.TILE_COLOR[tile.tileType]
+                pygame.draw.rect(self.map_surface,self.tile_colour, (x * self.TILE_SIZE, y * self.TILE_SIZE, self.TILE_SIZE, self.TILE_SIZE))
+
 
 
 

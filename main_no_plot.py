@@ -19,6 +19,7 @@ kingdom = Kingdom(world_map, 100, [],  100, 50)
 world_map.generate()
 #world_map.printMap()
 game_renderer.initialise()
+game_renderer.draw_map(world_map)
 kingdom.spawn_agents(10)
 
 
