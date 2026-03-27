@@ -17,5 +17,3 @@ class Tile:
     def __str__(self):
         return self.tileType
 
-    def is_passable(self):
-        return self.passable

@@ -18,7 +18,7 @@ class Peasant(Agent):
     def step(self, simulator):
 
         #HUNGER INCREMENTING
-        self.hunger += 3
+        self.hunger += 4
 
         #SURVIVAL CHECKS
         if self.hunger >= 100:
@@ -44,7 +44,7 @@ class Peasant(Agent):
 
         #WORKING - making food every day
         if (simulator.tick - self.birth_tick) % 24 == 0:
-            simulator.food_stores += 1
+            simulator.food_stores += 1.2
 
         #AGING - every year
         if simulator.tick % 8760 == 0:

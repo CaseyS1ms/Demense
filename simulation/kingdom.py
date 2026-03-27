@@ -15,6 +15,7 @@ class Kingdom(Simulator):
 
 
 
+
     def step(self):
 
         dead_agent = []
@@ -37,6 +38,8 @@ class Kingdom(Simulator):
 
         for agent in self.agents:
             agent.update()
+
+
 
         #EVERY WEEK
         if self.tick % 168 == 0:
@@ -65,5 +68,17 @@ class Kingdom(Simulator):
         # print("agent born")
         self.agents.append(peasant)
     #END OF AGENT BORN FUNCTION
+
+    # 0 is Winter, 1 is Spring, 2 is Summer, 3 is Autumn
+    def get_season(self):
+        if (self.tick % 8760) // 2190 == 0:
+            return "Winter"
+        elif (self.tick % 8760) // 2190 == 1:
+            return "Spring"
+        elif (self.tick % 8760) // 2190 == 2:
+            return "Summer"
+        elif (self.tick % 8760) // 2190 == 3:
+            return "Autumn"
+
 
 

@@ -35,7 +35,7 @@ while running:
 
 
 
-    if not game_renderer.update(world_map, kingdom.agents):
+    if not game_renderer.update(kingdom.agents, kingdom):
         running = False
 
 if kingdom.pop_list and kingdom.food_list:

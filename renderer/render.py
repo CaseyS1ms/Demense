@@ -37,6 +37,7 @@ class renderer:
         self.sizeH = self.height
         self.screen = pygame.display.set_mode((self.sizeW, self.sizeH))
         self.map_surface = None
+        self.font = pygame.font.Font('freesansbold.ttf', 32)
 
 
         #temporarily here
@@ -46,13 +47,18 @@ class renderer:
 
 
 
-    def update(self, world_map, agents):
+    def update(self, agents, simulator):
 
         self.screen.blit(self.map_surface, (0, 0))
 
 
         for agent in agents:
             pygame.draw.circle(self.screen, "red", (agent.posX * self.TILE_SIZE, agent.posY * self.TILE_SIZE), 2)
+
+        text = self.font.render(simulator.get_season(), True, (255,255,255))
+
+        self.screen.blit(text, (10, 10))
+
         pygame.display.flip()
 
         for event in pygame.event.get():

@@ -6,7 +6,7 @@ class Simulator:
         self.population = population
         self.food_stores = food_stores
         self.treasury = treasury
-
+        self.season = 0
         self.tick = 0
 
 

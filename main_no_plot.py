@@ -1,3 +1,4 @@
+
 from world.map import Map as mp
 from renderer.render import renderer
 from simulation.kingdom import Kingdom
@@ -20,7 +21,7 @@ game_renderer.draw_map(world_map)
 
 
 kingdom = Kingdom(world_map, 100, [],  100, 50)
-kingdom.spawn_agents(99999)
+kingdom.spawn_agents(10)
 
 
 
@@ -35,7 +36,7 @@ while running:
 
 
 
-    if not game_renderer.update(world_map, kingdom.agents):
+    if not game_renderer.update(kingdom.agents, kingdom):
         running = False
 
 
