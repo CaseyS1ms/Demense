@@ -1,5 +1,6 @@
 import noise
 import numpy as np
+import random
 from world.tile import Tile
 
 class Map:
@@ -16,9 +17,11 @@ class Map:
 
 
     def generate(self):
+        offset_x = random.randint(0, 100000)
+        offset_y = random.randint(0, 100000)
         for y in range(self.height):
             for x in range(self.width):
-                self.grid[y][x] = noise.pnoise2(x / self.scale, y / self.scale, 3, 0.5, 2.0, 2560, 2560)
+                self.grid[y][x] = noise.pnoise2((x + offset_x) / self.scale, (y + offset_y) / self.scale, 3, 0.5)
                 tileType = self.getTileType(self.grid[y][x])
                 self.grid[y][x] = Tile(tileType)
         return self.grid
@@ -27,7 +30,7 @@ class Map:
         if value < -0.3:
             return "water"
         elif value < 0.0:
-            return "farmland"
+            return "grass"
         elif value < 0.2:
             return "forest"
         elif value < 0.3:

@@ -12,7 +12,8 @@ class renderer:
             "mountain": (113, 113, 123),
             "farmland": (124, 207, 53),
             "forest":  (53, 83, 14),
-            "hills":  (187, 244, 81)
+            "hills":  (187, 244, 81),
+            "grass":(124, 207, 53)
         }
 
 
@@ -81,6 +82,9 @@ class renderer:
                 tile = world_map.grid[y][x]
                 self.tile_colour = self.TILE_COLOR[tile.tileType]
                 pygame.draw.rect(self.map_surface,self.tile_colour, (x * self.TILE_SIZE, y * self.TILE_SIZE, self.TILE_SIZE, self.TILE_SIZE))
+                if tile.tile_state == "taken":
+                    pygame.draw.rect(self.map_surface, (255,255,255),(x * self.TILE_SIZE, y * self.TILE_SIZE, self.TILE_SIZE, self.TILE_SIZE))
+
 
     def get_map_dimensions(self):
         return_width = self.width / self.TILE_SIZE

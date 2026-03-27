@@ -13,6 +13,7 @@ class Agent:
         self.age = random.randint(18, 24)
         self.gender = random.randint(1,2) #1 is male 2 is female - will play a role in reproduction
         self.map = map
+        self.state = "idle"
 
         self.find_spawn_position()
 

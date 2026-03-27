@@ -10,6 +10,7 @@ class Peasant(Agent):
         self.ageofdeath = random.randint(60, 100)
         self.birth_tick = tick
         self.sim_map = sim_map
+        self.time_started = 0
 
 
 
@@ -19,6 +20,10 @@ class Peasant(Agent):
 
         #HUNGER INCREMENTING
         self.hunger += 4
+
+        if self.state == "plowing":
+            self.time_started = self.tick
+            self.plowing_state()
 
         #SURVIVAL CHECKS
         if self.hunger >= 100:
@@ -84,3 +89,9 @@ class Peasant(Agent):
             return False
 
     #END OF ATTEMPT EAT FUNCTION
+
+    def plowing_state(self):
+        #PLOWS TILE ITS ON
+        if self.time_started - self.tick >= 2:
+            tile = self.sim_map.grid[self.posY][self.posX]
+            tile.tile_state = "plowed"

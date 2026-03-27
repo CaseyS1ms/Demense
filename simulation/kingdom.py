@@ -6,12 +6,17 @@ from simulation.simulator import Simulator
 import random
 import math
 
+from structures.granary import Granary
+
+
 class Kingdom(Simulator):
 
     def __init__(self, map, market, agents, food_stores, treasury):
         super().__init__(map, market, agents, len(agents), food_stores, treasury)
         self.pop_list = []
         self.food_list = []
+        self.granary = None
+        self.map = map
 
 
 
@@ -79,6 +84,20 @@ class Kingdom(Simulator):
             return "Summer"
         elif (self.tick % 8760) // 2190 == 3:
             return "Autumn"
+    #END OF GET SEASON FUNCTION
+
+
+    def place_granary(self):
+        for y in range(self.map.height):
+            for x in range(self.map.width):
+                if self.map.grid[y][x].passable and self.map.grid[y][x].fertility >= 1:
+                    self.granary = Granary(y, x)
+                    tile = self.map.grid[y][x]
+                    tile.tile_state = "taken"
+                    return
+
+        raise ValueError ("No Suitable Tile found")
+
 
 
 

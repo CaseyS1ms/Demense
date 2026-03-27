@@ -16,11 +16,14 @@ map_width, map_height = game_renderer.get_map_dimensions()
 world_map = mp(int(map_width),int(map_height),100)
 world_map.generate()
 
+kingdom = Kingdom(world_map, 100, [],  100, 50)
+kingdom.place_granary()
 game_renderer.draw_map(world_map)
 
 
 
-kingdom = Kingdom(world_map, 100, [],  100, 50)
+
+
 kingdom.spawn_agents(10)
 
 
