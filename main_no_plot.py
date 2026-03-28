@@ -24,7 +24,7 @@ game_renderer.draw_map(world_map)
 
 
 
-kingdom.spawn_agents(10)
+kingdom.spawn_agents(999)
 
 
 

@@ -21,23 +21,29 @@ class Peasant(Agent):
         #HUNGER INCREMENTING
         self.hunger += 4
 
-        if self.state == "plowing":
-            self.time_started = self.tick
-            self.plowing_state()
-
         #SURVIVAL CHECKS
         if self.hunger >= 100:
-            print("agent died of hunger")
+            #print("agent died of hunger")
             return "dead"
 
         if self.age > self.ageofdeath:
-            print("agent died of old age")
+            #print("agent died of old age")
             return "dead"
 
         #EATING
         if self.hunger > 75:
+            self.update(simulator.granary)
             if self.attempt_eat(simulator):
                 self.hunger = 0
+
+
+        #STATE
+        if self.state == "plowing":
+            self.time_started = self.tick
+            self.plowing_state()
+
+
+
 
         #REPRODUCTION
         if self.age >= 18 and self.gender == 2:  #Gender 2 is female
@@ -58,13 +64,28 @@ class Peasant(Agent):
         return "alive"
     #END OF STEP FUNCTION
 
-    def update(self):
+    def update(self, target):
 
         max_x = self.sim_map.width - 1
         max_y = self.sim_map.height - 1
 
-        new_x = self.posX + random.randint(-1, 1)
-        new_y = self.posY + random.randint(-1,1)
+        new_x = self.posX
+        new_y = self.posY
+
+        if target is None:
+            new_x = self.posX + random.randint(-1, 1)
+            new_y = self.posY + random.randint(-1,1)
+        else:
+            if random.random() < 0.8:
+
+                if self.posX < target.posX:
+                    new_x = self.posX + 1
+                if self.posX > target.posX:
+                    new_x = self.posX - 1
+                if self.posY < target.posY:
+                    new_y = self.posY + 1
+                if self.posY > target.posY:
+                    new_y = self.posY - 1
 
         #BOUNDS CHECKING
         new_x = max(0, min(max_x, new_x))

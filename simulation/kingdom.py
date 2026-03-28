@@ -41,8 +41,9 @@ class Kingdom(Simulator):
         #ONE TICK IS ONE HOUR
         self.tick += 1
 
-        for agent in self.agents:
-            agent.update()
+
+
+
 
 
 
@@ -88,13 +89,14 @@ class Kingdom(Simulator):
 
 
     def place_granary(self):
-        for y in range(self.map.height):
-            for x in range(self.map.width):
-                if self.map.grid[y][x].passable and self.map.grid[y][x].fertility >= 1:
-                    self.granary = Granary(y, x)
-                    tile = self.map.grid[y][x]
-                    tile.tile_state = "taken"
-                    return
+        tile_list = [(x, y) for y in range(self.map.height) for x in range(self.map.width)]
+        random.shuffle(tile_list)
+        for x,y in tile_list:
+            if self.map.grid[y][x].passable and self.map.grid[y][x].fertility >= 1:
+                self.granary = Granary(y, x)
+                tile = self.map.grid[y][x]
+                tile.tile_state = "taken"
+                return
 
         raise ValueError ("No Suitable Tile found")
 

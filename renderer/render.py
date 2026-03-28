@@ -38,7 +38,7 @@ class renderer:
         self.sizeH = self.height
         self.screen = pygame.display.set_mode((self.sizeW, self.sizeH))
         self.map_surface = None
-        self.font = pygame.font.Font('freesansbold.ttf', 32)
+        self.font = pygame.font.Font('freesansbold.ttf', 16)
 
 
         #temporarily here
@@ -54,7 +54,7 @@ class renderer:
 
 
         for agent in agents:
-            pygame.draw.circle(self.screen, "red", (agent.posX * self.TILE_SIZE, agent.posY * self.TILE_SIZE), 2)
+            pygame.draw.circle(self.screen, "red", (agent.posX * self.TILE_SIZE, agent.posY * self.TILE_SIZE), 1)
 
         text = self.font.render(simulator.get_season(), True, (255,255,255))
 
