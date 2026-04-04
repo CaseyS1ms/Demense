@@ -61,6 +61,7 @@ class renderer:
         self.screen.blit(text, (10, 10))
 
         pygame.display.flip()
+        #print(self.clock.get_fps())
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

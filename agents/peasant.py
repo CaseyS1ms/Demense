@@ -21,6 +21,8 @@ class Peasant(Agent):
         #HUNGER INCREMENTING
         self.hunger += 4
 
+        self.update(None)
+
         #SURVIVAL CHECKS
         if self.hunger >= 100:
             #print("agent died of hunger")
@@ -32,7 +34,8 @@ class Peasant(Agent):
 
         #EATING
         if self.hunger > 75:
-            self.update(simulator.granary)
+            # if self.attempt_eat(simulator) and self.is_on_target(simulator.granary):
+            #     self.hunger = 0
             if self.attempt_eat(simulator):
                 self.hunger = 0
 
@@ -106,6 +109,14 @@ class Peasant(Agent):
         if simulator.is_food():
             simulator.food_stores -= 1
             return True
+        else:
+            return False
+
+    def is_on_target(self, target):
+        if self.posY == target.posY:
+            if self.posX == target.posX:
+                return True
+            return False
         else:
             return False
 

@@ -17,14 +17,15 @@ world_map = mp(int(map_width),int(map_height),100)
 world_map.generate()
 
 kingdom = Kingdom(world_map, 100, [],  100, 50)
-kingdom.place_granary()
+for i in range(10):
+    kingdom.place_granary()
 game_renderer.draw_map(world_map)
 
 
 
 
 
-kingdom.spawn_agents(999)
+kingdom.spawn_agents(100)
 
 
 
@@ -36,6 +37,7 @@ running = True
 while running:
 
     kingdom.step()
+
 
 
 
