@@ -1,11 +1,7 @@
-import agents
-from agents import peasant
-
 from agents.peasant import Peasant
 from simulation.simulator import Simulator
 import random
 import math
-
 from structures.granary import Granary
 
 
@@ -17,22 +13,22 @@ class Kingdom(Simulator):
         self.food_list = []
         self.granary = None
         self.map = map
-
-
-
+        self.total_births = 0
+        self.total_deaths = 0
 
     def step(self):
 
-        dead_agent = []
+
         for active_agent in self.agents:
             state = active_agent.step(self)
 
             if state == "dead":
-                dead_agent.append(active_agent)
+                self.total_deaths += 1
             elif state == "reproduce":
                 self.agent_born()
+                self.total_births += 1
 
-        self.agents = [a for a in self.agents if a not in dead_agent]
+        self.agents = [a for a in self.agents if a.is_alive]
 
 
 
@@ -56,7 +52,7 @@ class Kingdom(Simulator):
         #EVERY MONTH
         if self.tick % 720 == 0:
             self.treasury += math.floor(len(self.agents) * 0.2)
-            print("population is: ", len(self.agents), "\nfood stores are: ", self.food_stores, "\ntreasury is: ", self.treasury)
+            #print("population is: ", len(self.agents), "\nfood stores are: ", self.food_stores, "\ntreasury is: ", self.treasury)
     #END OF STEP FUNCTION
 
     def spawn_agents(self, amount):
@@ -73,7 +69,7 @@ class Kingdom(Simulator):
         peasant = Peasant(self.tick, self.map)
         # print("agent born")
         self.agents.append(peasant)
-    #END OF AGENT BORN FUNCTION
+    #END OF AGENT-BORN FUNCTION
 
     # 0 is Winter, 1 is Spring, 2 is Summer, 3 is Autumn
     def get_season(self):
@@ -93,7 +89,7 @@ class Kingdom(Simulator):
         random.shuffle(tile_list)
         for x,y in tile_list:
             if self.map.grid[y][x].passable and self.map.grid[y][x].fertility >= 1:
-                self.granary = Granary(y, x)
+                self.granary = Granary(x, y)
                 tile = self.map.grid[y][x]
                 tile.tile_state = "taken"
                 return
