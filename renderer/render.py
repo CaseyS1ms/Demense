@@ -2,7 +2,7 @@ import pygame
 import random
 
 
-class renderer:
+class Renderer:
 
     TILE_SIZE = 2
 

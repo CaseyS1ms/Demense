@@ -1,12 +1,15 @@
 from agents.agent import Agent
 import random
 
+from structures import granary
+
 
 class Peasant(Agent):
 
     def __init__(self, tick, sim_map):
         super().__init__(0, 0, tick, 0, sim_map)
         self.last_reproduced = random.randint(0,6480)
+        self.update_offset = random.randint(0, 5)
         self.ageofdeath = random.randint(60, 100)
         self.birth_tick = tick
         self.sim_map = sim_map
@@ -19,31 +22,40 @@ class Peasant(Agent):
     def step(self, simulator):
 
         #HUNGER INCREMENTING
-        self.hunger += 4
+        self.hunger += 1
 
-        self.update(None)
+
 
         #SURVIVAL CHECKS
         if self.hunger >= 100:
             #print("agent died of hunger")
-            return "dead"
+            self.is_alive = False
+            return 'dead'
 
         if self.age > self.ageofdeath:
             #print("agent died of old age")
-            return "dead"
+            self.is_alive = False
+            return 'dead'
 
         #EATING
-        if self.hunger > 75:
-            # if self.attempt_eat(simulator) and self.is_on_target(simulator.granary):
-            #     self.hunger = 0
-            if self.attempt_eat(simulator):
+        if self.hunger > 35:
+            if self.attempt_eat(simulator) and self.is_on_target(simulator.granary):
                 self.hunger = 0
+            # if self.attempt_eat(simulator):
+            #     self.hunger = 0
+            else:
+                self.update(simulator.granary)
+        else:
+            if simulator.tick % 6 == self.update_offset:  # CHANGE THIS LINE
+                self.update(None)
 
 
-        #STATE
+        #STATE MACHINE
         if self.state == "plowing":
             self.time_started = self.tick
             self.plowing_state()
+
+        
 
 
 
@@ -61,7 +73,7 @@ class Peasant(Agent):
             simulator.food_stores += 1.2
 
         #AGING - every year
-        if simulator.tick % 8760 == 0:
+        if (simulator.tick - self.birth_tick) % 8760 == 0 and simulator.tick != self.birth_tick:
             self.age += 1
 
         return "alive"
@@ -108,6 +120,7 @@ class Peasant(Agent):
     def attempt_eat(self,simulator):
         if simulator.is_food():
             simulator.food_stores -= 1
+            simulator.food_stores = max(0, simulator.food_stores)
             return True
         else:
             return False

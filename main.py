@@ -2,14 +2,14 @@ import matplotlib.pyplot as plt
 
 from agents.peasant import Peasant
 from world.map import Map as mp
-from renderer.render import renderer
+from renderer.render import Renderer
 from simulation.kingdom import Kingdom
 
 
 MAP_SIZE_WIDTH = 500
 MAP_SIZE_HEIGHT = 400
 
-game_renderer = renderer(MAP_SIZE_WIDTH, MAP_SIZE_HEIGHT)
+game_renderer = Renderer(MAP_SIZE_WIDTH, MAP_SIZE_HEIGHT)
 map_width, map_height = game_renderer.get_map_dimensions()
 world_map = mp(int(map_width),int(map_height),25)
 
@@ -23,7 +23,7 @@ game_renderer.draw_map(world_map)
 kingdom.spawn_agents(10)
 
 
-
+STEPS_PER_FRAME = 10
 
 
 
@@ -31,7 +31,8 @@ kingdom.spawn_agents(10)
 running = True
 while running:
 
-    kingdom.step()
+    for i in range(STEPS_PER_FRAME):
+        kingdom.step()
 
 
 
